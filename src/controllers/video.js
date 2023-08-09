@@ -4,10 +4,9 @@ const createVideoController = async (req, res) => {
     /*
         IMPORTANT
         Get user id, wheter from body or decoded from jwt token.
-        If jwt token use to get user id, consider using middleware,
-        or put the logic directly here.
+        If jwt token use to get user id, consider to create middleware to verify/decoded token,
+        or simply put the logic directly here.
     */
-
     const { title, videoImage, embedId, userId } = req.body
 
     const video = new VideoModel({

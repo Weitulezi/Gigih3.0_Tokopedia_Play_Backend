@@ -1,4 +1,4 @@
-const UserModel = require("../models/User")
+const UserModel = require("../models/user")
 const { hashPassword, validateEmail } = require("../utils/form")
 const { generateToken, verifyToken } = require("../middleware/auth")
 const bcrypt = require("bcryptjs")
@@ -60,7 +60,32 @@ const loginUserController = async (req, res) => {
     }
 
     const token = generateToken({ id: String(user._id), emai: user.email })
-    res.status(200).json({ user: { email: user.email }, token })
+    res.status(200).json({
+        user: {
+            id: String(user._id),
+            email: user.email,
+        },
+        token,
+    })
 }
 
-module.exports = { createUserController, loginUserController }
+const verifyTokenController = async (req, res) => {
+    console.log(req.headers)
+    if (
+        req.headers.authorization &&
+        req.headers.authorization.split(" ")[0] === "Bearer"
+    ) {
+        const token = req.headers.authorization.split(" ")[1]
+        const { tokenValid, data } = verifyToken(token)
+        if (tokenValid) {
+            return res.status(200).json(data)
+        }
+    }
+    return res.status(401).json({ message: "Token is not valid." })
+}
+
+module.exports = {
+    createUserController,
+    loginUserController,
+    verifyTokenController,
+}

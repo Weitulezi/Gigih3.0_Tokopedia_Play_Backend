@@ -27,7 +27,10 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(cors())
 
 const userRoutes = require("./src/routes/user")
+const videoRoutes = require("./src/routes/video")
+
 app.use("/api", userRoutes)
+app.use("/api", videoRoutes)
 
 app.listen(port, () => {
     console.log(`Server is listening on port ${port}`)

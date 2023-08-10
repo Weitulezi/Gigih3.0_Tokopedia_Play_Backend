@@ -10,3 +10,5 @@ const {
 router.post(`/videos`, createVideoController)
 router.get(`/videos`, getVideoListController)
 router.get(`/videos/:videoId`, getVideoController)
+
+module.exports = router

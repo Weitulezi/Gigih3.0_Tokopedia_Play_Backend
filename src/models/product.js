@@ -1,27 +1,31 @@
 const mongoose = require("mongoose")
 
-const VideoSchema = new mongoose.Schema(
+const ProductSchema = new mongoose.Schema(
     {
         title: {
             type: String,
             required: true,
         },
-        videoImage: {
+        image: {
             type: String,
             required: true,
-            default: "",
+            default: "/assets/bracket-tv.png",
         },
-        embedId: {
+        price: {
+            type: Number,
+            required: true,
+        },
+        link: {
             type: String,
             required: true,
         },
-        user: {
+        video: {
             type: mongoose.Types.ObjectId,
             required: true,
-            ref: "User",
+            ref: "Video",
         },
     },
     { timestamps: true },
 )
 
-module.exports = mongoose.model("Video", VideoSchema)
+export default mongoose.model("Product", ProductSchema)

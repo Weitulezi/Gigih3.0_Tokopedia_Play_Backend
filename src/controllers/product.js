@@ -24,7 +24,7 @@ const createProductController = async (req, res) => {
         })
         const savedProduct = await product.save()
 
-        res.status(200).json({
+        res.status(201).json({
             message: "Product is successfully created.",
             data: savedProduct,
         })

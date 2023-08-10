@@ -28,20 +28,16 @@ const validateAuthorization = (req, res, next) => {
         const { tokenValid, data } = verifyToken(token)
         if (tokenValid) {
             // Auth bear exist in header and Valid
-            req.tokenValid = tokenValid
             req.loggedInUser = data
             next()
         } else {
             // Auth bear exist in header and but not Valid
-            req.tokenValid = tokenValid // false
-            req.loggedInUser = data // null
-            next()
+            return res.status(401).json({ message: "You are unautorized." })
         }
     } else {
         // No Authorization Bearer in header
-        req.tokenValid = false
-        req.loggedInUser = null
         next()
+        return res.status(401).json({ message: "You are unautorized." })
     }
 }
 

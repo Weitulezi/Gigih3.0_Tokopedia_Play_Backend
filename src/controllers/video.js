@@ -31,8 +31,7 @@ const createVideoController = async (req, res) => {
 }
 
 const getVideoController = async (req, res) => {
-    const { videoId } = req.params.videoId
-
+    const videoId = req.params.videoId
     try {
         const video = await VideoModel.findById(videoId)
         res.status(200).json(video)

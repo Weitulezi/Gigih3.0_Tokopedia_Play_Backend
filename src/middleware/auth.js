@@ -2,7 +2,7 @@ const jwt = require("jsonwebtoken")
 
 const generateToken = (payload) => {
     const token = jwt.sign(payload, process.env.PRIVATE_KEY, {
-        expiresIn: 60 * 60,
+        expiresIn: 60 * 60 * 24,
     })
     return token
 }
@@ -31,12 +31,13 @@ const validateAuthorization = (req, res, next) => {
             req.loggedInUser = data
             next()
         } else {
+            console.log("failed here 1");
             // Auth bear exist in header and but not Valid
             return res.status(401).json({ message: "You are unautorized." })
         }
     } else {
         // No Authorization Bearer in header
-        next()
+        console.log("failed here 2");
         return res.status(401).json({ message: "You are unautorized." })
     }
 }

@@ -9,7 +9,7 @@ const createProductController = async (req, res) => {
         const video = await VideoModel.findById(videoId)
 
         // Making sure video is belong to the loggedi in user, before creating the product.
-        if (String(video.user) !== loggedInUser.id) {
+        if (String(video.user) !== loggedInUser._id) {
             return res
                 .status(401)
                 .json({ message: "You are unauthorized to make this request." })
@@ -35,7 +35,7 @@ const createProductController = async (req, res) => {
 }
 
 const getProductListOfVideoController = async (req, res) => {
-    const videoId = req.params.videoId
+    const videoId = req.query.video
 
     try {
         const products = await ProductModel.find({ video: videoId })

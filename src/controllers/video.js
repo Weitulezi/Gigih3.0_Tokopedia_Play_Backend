@@ -1,19 +1,14 @@
 const VideoModel = require("../models/video")
 
 const createVideoController = async (req, res) => {
-    /*
-        IMPORTANT
-        Get user id, wheter from body or decoded from jwt token.
-        If jwt token use to get user id, consider createting middleware to verify/decoded token,
-        or simply put the logic directly here.
-    */
+    const loggedInUser = req.loggedInUser
     const { title, thumbnail, embedId, userId } = req.body
 
     const video = new VideoModel({
         title,
         thumbnail,
         embedId,
-        user: userId,
+        user: loggedInUser._id,
     })
 
     try {
@@ -22,7 +17,7 @@ const createVideoController = async (req, res) => {
             video: savedVideo,
             message: "Video is successfully created.",
         })
-    } catch (err) {
+    } catch (err) {;
         res.status(400).json({
             success: false,
             message: "Failed to create a video.",

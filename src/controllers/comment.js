@@ -1,12 +1,15 @@
-const CommectSchema = require("../models/comment")
+const CommentModel = require("../models/comment")
 
 const createCommentController = async (req, res) => {
     const loggedInUser = req.loggedInUser
 
-    const { content } = req.body
+    const { content, videoId } = req.body
 
-    const comment = new CommectSchema({
-        user: loggedInUser.id,
+    const comment = new CommentModel({
+        user: {
+            _id: loggedInUser._id,
+            email: loggedInUser.email
+        },
         content: content,
         video: videoId,
     })
@@ -18,16 +21,19 @@ const createCommentController = async (req, res) => {
             message: "Comment successfully created.",
         })
     } catch (err) {
+        console.log(err);
         res.status(400).json({ message: "Failed to post a comment." })
     }
 }
 
 const getCommentListOfVideoController = async (req, res) => {
-    const videoId = req.params.videoId
+    const videoId = req.query.video
+
     try {
-        const comments = await comments.find({ video: videoId })
+        const comments = await CommentModel.find({ video: videoId })
         res.status(200).json(comments)
     } catch (err) {
+        console.log(err);
         res.status(400).json({ message: "Faield to retrieve video's comment" })
     }
 }

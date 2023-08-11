@@ -59,10 +59,10 @@ const loginUserController = async (req, res) => {
             .json({ message: "Please input a correct email and password" })
     }
 
-    const token = generateToken({ id: String(user._id), emai: user.email })
+    const token = generateToken({ _id: String(user._id), email: user.email })
     res.status(200).json({
         user: {
-            id: String(user._id),
+            _id: String(user._id),
             email: user.email,
         },
         token,

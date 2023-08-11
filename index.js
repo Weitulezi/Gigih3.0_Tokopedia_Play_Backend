@@ -29,10 +29,12 @@ app.use(cors())
 const userRoutes = require("./src/routes/user")
 const videoRoutes = require("./src/routes/video")
 const productRoutes = require("./src/routes/product")
+const commentRoutes = require("./src/routes/comment")
 
 app.use("/api", userRoutes)
 app.use("/api", videoRoutes)
 app.use("/api", productRoutes)
+app.use("/api", commentRoutes)
 
 app.listen(port, () => {
     console.log(`Server is listening on port ${port}`)

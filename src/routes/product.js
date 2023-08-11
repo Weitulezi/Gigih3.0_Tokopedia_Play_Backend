@@ -10,6 +10,6 @@ const {
 router.post("/products", validateAuthorization, createProductController)
 
 // Get Products that belong to a video.
-router.get("/products/video/:videoId", getProductListOfVideoController)
+router.get("/products", getProductListOfVideoController)
 
 module.exports = router

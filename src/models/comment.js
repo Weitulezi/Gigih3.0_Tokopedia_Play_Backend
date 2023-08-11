@@ -1,11 +1,16 @@
 const mongoose = require("mongoose")
 
-const CommectSchema = new mongoose.Schema(
+const CommentSchema = new mongoose.Schema(
     {
         user: {
-            type: mongoose.Types.ObjectId,
-            required: true,
-            ref: "User",
+            _id: {
+                type: mongoose.Types.ObjectId,
+                required: true,
+            },
+            email: {
+                type: String,
+                required: true,
+            }
         },
         video: {
             type: mongoose.Types.ObjectId,
@@ -21,4 +26,4 @@ const CommectSchema = new mongoose.Schema(
     { timestamps: true },
 )
 
-module.exports = mongoose.model("Comment", CommectSchema)
+module.exports = mongoose.model("Comment", CommentSchema)

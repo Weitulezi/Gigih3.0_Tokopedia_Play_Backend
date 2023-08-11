@@ -8,7 +8,7 @@ const {
     getVideoListController,
 } = require("../controllers/video")
 
-router.post(`/videos`, createVideoController)
+router.post(`/videos`, validateAuthorization, createVideoController)
 router.get(`/videos`, getVideoListController)
 router.get(`/videos/:videoId`, getVideoController)
 

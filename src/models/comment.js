@@ -10,7 +10,7 @@ const CommentSchema = new mongoose.Schema(
             email: {
                 type: String,
                 required: true,
-            }
+            },
         },
         video: {
             type: mongoose.Types.ObjectId,

@@ -8,7 +8,7 @@ const createCommentController = async (req, res) => {
     const comment = new CommentModel({
         user: {
             _id: loggedInUser._id,
-            email: loggedInUser.email
+            email: loggedInUser.email,
         },
         content: content,
         video: videoId,
@@ -16,12 +16,10 @@ const createCommentController = async (req, res) => {
 
     try {
         const savedComment = await comment.save()
-        res.status(201).json({
-            data: savedComment,
-            message: "Comment successfully created.",
-        })
+        console.log(savedComment)
+        res.status(201).json(savedComment)
     } catch (err) {
-        console.log(err);
+        console.log(err)
         res.status(400).json({ message: "Failed to post a comment." })
     }
 }
@@ -33,7 +31,7 @@ const getCommentListOfVideoController = async (req, res) => {
         const comments = await CommentModel.find({ video: videoId })
         res.status(200).json(comments)
     } catch (err) {
-        console.log(err);
+        console.log(err)
         res.status(400).json({ message: "Faield to retrieve video's comment" })
     }
 }

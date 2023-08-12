@@ -29,7 +29,6 @@ const createProductController = async (req, res) => {
             data: savedProduct,
         })
     } catch (err) {
-        console.log(err)
         return res.status(400).json({ message: "There is something wrong" })
     }
 }

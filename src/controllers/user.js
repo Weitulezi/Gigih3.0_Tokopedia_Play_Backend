@@ -1,24 +1,49 @@
 const UserModel = require("../models/user")
-const { hashPassword, validateEmail } = require("../utils/form")
+const { hashPassword } = require("../utils/form")
 const { generateToken, verifyToken } = require("../middleware/auth")
 const bcrypt = require("bcryptjs")
+const validator = require("validator")
 
 const createUserController = async (req, res) => {
-    const { email, password } = req.body
+    const { username, email, password } = req.body
 
-    // Making sure password is not empty
-    if (password === "") {
-        return res.status(400).json({ message: "Password can't be empty" })
+    // Validate username is alphanumeric
+    const isUsernameAlphanumeric = validator.isAlphanumeric(username)
+    if (!isUsernameAlphanumeric) {
+        return res.status(400).json({
+            message: "Username must contain only numbers and letters.",
+        })
     }
 
-    const isEmailValid = validateEmail(email)
+    // Validate email format
+    const isEmailValid = validator.isEmail(email)
     if (!isEmailValid) {
         return res.status(400).json({ message: "Email is not valid." })
+    }
+
+    // Validate password is alphanumeric
+    const isPasswordAlphanumeric = validator.isAlphanumeric(password)
+    if (!isPasswordAlphanumeric) {
+        return res.status(400).json({
+            message: "Password must contain only numbers and letters.",
+        })
+    }
+
+    const isPasswordLengthValid = validator.isLength(password, {
+        min: 6,
+        max: 256,
+    })
+    if (!isPasswordLengthValid) {
+        return res.status(400).json({
+            message:
+                "Password must contain more than 6 characters and less than 256 characters",
+        })
     }
 
     const hashedPassword = hashPassword(password)
 
     const user = new UserModel({
+        username,
         email,
         imageProfile: "",
         password: hashedPassword,
@@ -30,26 +55,52 @@ const createUserController = async (req, res) => {
             message: "User is successfully created.",
         })
     } catch (err) {
-        console.log(err)
+        let cleanErrorMessage = err.message.split(": ")[2]
+        if (cleanErrorMessage === "username_1 dup key") {
+            cleanErrorMessage = "Username already exist"
+        }
         res.status(400).json({
-            message: "Unable to create a sure, try again later.",
+            message: cleanErrorMessage,
         })
     }
 }
 
 const loginUserController = async (req, res) => {
-    const { email, password } = req.body
+    const { username, password } = req.body
 
-    // Validate email text
-    const isEmailValid = validateEmail(email)
-    if (!isEmailValid) {
-        return res.status(400).json({ message: "Email is not valid." })
+    // Validate username is alphanumeric
+    const isUsernameAlphanumeric = validator.isAlphanumeric(username)
+    if (!isUsernameAlphanumeric) {
+        return res.status(400).json({
+            message: "Username must contain only numbers and letters.",
+        })
     }
 
-    const user = await UserModel.findOne({ email: email })
+    // Validate password is alphanumeric
+    const isPasswordAlphanumeric = validator.isAlphanumeric(password)
+    if (!isPasswordAlphanumeric) {
+        return res.status(400).json({
+            message: "Password must contain only numbers and letters.",
+        })
+    }
+
+    const isPasswordLengthValid = validator.isLength(password, {
+        min: 6,
+        max: 256,
+    })
+    if (!isPasswordLengthValid) {
+        return res.status(400).json({
+            message:
+                "Password must contain more than 6 characters and less than 256 characters",
+        })
+    }
+
+    const user = await UserModel.findOne({ username: username })
 
     if (user === null) {
-        return res.status(400).json({ message: "User doesn't exits." })
+        return res
+            .status(400)
+            .json({ message: "Please input a correct email and password" })
     }
 
     const isPasswordValid = bcrypt.compareSync(password, user.password)
@@ -59,10 +110,15 @@ const loginUserController = async (req, res) => {
             .json({ message: "Please input a correct email and password" })
     }
 
-    const token = generateToken({ _id: String(user._id), email: user.email })
+    const token = generateToken({
+        _id: String(user._id),
+        username: user.username,
+        email: user.email,
+    })
     res.status(200).json({
         user: {
             _id: String(user._id),
+            username: user.username,
             email: user.email,
         },
         token,

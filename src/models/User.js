@@ -2,20 +2,35 @@ const mongoose = require("mongoose")
 
 const UserSchema = new mongoose.Schema(
     {
+        username: {
+            type: String,
+            required: [true, "Username is required"],
+            unique: true,
+            minLength: [6, "Username must contain more than 6 character"],
+            maxLength: [20, "Password must contain less than 20 character"],
+        },
         email: {
             type: String,
             required: true,
-            unique: true,
         },
         imageProfile: {
             type: String,
             required: false,
+            default: "",
         },
         password: {
             type: String,
             required: true,
-            minLength: 6,
-            maxLength: 220,
+            minLength: [6, "Password must contain more 6 character"],
+            maxLength: [500, "Password must contain less than 220 character"],
+        },
+        isAdmin: {
+            type: Boolean,
+            default: false,
+        },
+        isSuperUser: {
+            type: Boolean,
+            default: false,
         },
     },
     { timestamps: true },

@@ -49,6 +49,7 @@ const getVideoListController = async (req, res) => {
         const videos = await VideoModel.find()
         res.status(200).json(videos)
     } catch (err) {
+        console.log(err.message)
         res.status(400).json({
             success: false,
             message: "Can't find any video.",

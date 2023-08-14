@@ -24,7 +24,14 @@ const port = process.env.PORT || 3000
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
-app.use(cors())
+app.use(
+    cors({
+        origin: [
+            "https://gigih3-0-tokopedia-play-frontend.vercel.app/",
+            "https://gigih3-0-tokopedia-play-frontend.vercel.app",
+        ],
+    }),
+)
 
 const userRoutes = require("./src/routes/user")
 const videoRoutes = require("./src/routes/video")

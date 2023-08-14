@@ -36,6 +36,6 @@ app.use("/api", videoRoutes)
 app.use("/api", productRoutes)
 app.use("/api", commentRoutes)
 
-app.listen(port, () => {
+app.listen(port, "0.0.0.0", () => {
     console.log(`Server is listening on port ${port}`)
 })

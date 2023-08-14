@@ -1,4 +1,4 @@
-const UserModel = require("../models/user")
+const UserModel = require("../models/User")
 const VideoModel = require("../models/video")
 const ProductModel = require("../models/product")
 const { hashPassword } = require("../utils/form")

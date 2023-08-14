@@ -20,7 +20,7 @@ database.once("connected", () => {
     console.log("Database connected!")
 })
 
-const port = 5000
+const port = 3000
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))

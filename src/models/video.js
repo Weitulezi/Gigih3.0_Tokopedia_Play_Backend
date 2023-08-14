@@ -5,7 +5,7 @@ const CategorySchema = new mongoose.Schema(
         name: {
             type: String,
             enum: {
-                values: ["electronics", "clothes"],
+                values: ["Electronics", "Clothes", "Foods and Drinks"],
                 message: "{VALUE} category doesn't exist",
             },
         },
@@ -18,11 +18,13 @@ const VideoSchema = new mongoose.Schema(
         title: {
             type: String,
             required: true,
+            minLength: [3, "Title {VALUE} is too short"],
         },
         thumbnail: {
             type: String,
             required: true,
-            default: "",
+            default:
+                "https://fiverr-res.cloudinary.com/t_main1,q_auto,f_auto/gigs/331207338/original/722106652e693e42e78e0a76f1f79adc41d1b863.png",
         },
         embedId: {
             type: String,

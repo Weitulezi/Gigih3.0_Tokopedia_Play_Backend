@@ -16,7 +16,7 @@ const UserSchema = new mongoose.Schema(
         imageProfile: {
             type: String,
             required: false,
-            default: "",
+            default: "/assets/default_pp.png",
         },
         password: {
             type: String,

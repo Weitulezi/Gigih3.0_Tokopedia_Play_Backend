@@ -21,6 +21,7 @@ const createProductController = async (req, res) => {
             link,
             price,
             video: videoId,
+            user: loggedInUser._id,
         })
         const savedProduct = await product.save()
 
@@ -29,7 +30,51 @@ const createProductController = async (req, res) => {
             data: savedProduct,
         })
     } catch (err) {
+        console.log(err.message)
         return res.status(400).json({ message: "There is something wrong" })
+    }
+}
+
+const updateProductController = async (req, res) => {
+    const loggedInUser = req.loggedInUser
+    const { productId, title, image, link, price, videoId } = req.body
+
+    try {
+        const product = await ProductModel.findOneAndUpdate(
+            { _id: productId, user: loggedInUser._id },
+            {
+                title,
+                image,
+                link,
+                price,
+                video: videoId,
+            },
+            {
+                runValidators: true,
+                upsert: true,
+            },
+        )
+
+        console.log(product)
+
+        res.status(200).json(product)
+    } catch (err) {
+        return res.status(400).json({ message: err.message })
+    }
+}
+
+const deleteProductController = async (req, res) => {
+    const loggedInUser = req.loggedInUser
+    const productId = req.params.productId
+
+    try {
+        await ProductModel.findOneAndDelete({
+            _id: productId,
+            user: loggedInUser._id,
+        })
+        res.status(200).json({ message: "Product is successfully deleted" })
+    } catch (err) {
+        return res.status(400).json({ message: err.message })
     }
 }
 
@@ -44,4 +89,9 @@ const getProductListOfVideoController = async (req, res) => {
     }
 }
 
-module.exports = { createProductController, getProductListOfVideoController }
+module.exports = {
+    createProductController,
+    updateProductController,
+    deleteProductController,
+    getProductListOfVideoController,
+}

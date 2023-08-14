@@ -9,6 +9,6 @@ const {
 
 router.post("/comments", validateAuthorization, createCommentController)
 // Get comment list that belong to a video based on the video id
-router.get("/comments",  getCommentListOfVideoController)
+router.get("/comments", getCommentListOfVideoController)
 
 module.exports = router

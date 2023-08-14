@@ -21,8 +21,12 @@ const ProductSchema = new mongoose.Schema(
         },
         video: {
             type: mongoose.Types.ObjectId,
-            required: true,
             ref: "Video",
+        },
+        user: {
+            type: mongoose.Types.ObjectId,
+            ref: "User",
+            require: true,
         },
     },
     { timestamps: true },

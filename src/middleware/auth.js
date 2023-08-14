@@ -31,13 +31,11 @@ const validateAuthorization = (req, res, next) => {
             req.loggedInUser = data
             next()
         } else {
-            console.log("failed here 1");
             // Auth bear exist in header and but not Valid
             return res.status(401).json({ message: "You are unautorized." })
         }
     } else {
         // No Authorization Bearer in header
-        console.log("failed here 2");
         return res.status(401).json({ message: "You are unautorized." })
     }
 }

@@ -8,7 +8,7 @@ const {
     updateUserController,
     getUserVideosController,
     getUserProductsController,
-} = require("../controllers/User")
+} = require("../controllers/user")
 const { validateAuthorization } = require("../middleware/auth")
 
 router.post("/users", createUserController)

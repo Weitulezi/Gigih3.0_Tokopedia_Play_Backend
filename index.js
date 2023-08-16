@@ -20,7 +20,7 @@ database.once("connected", () => {
     console.log("Database connected!")
 })
 
-const isProduction = false
+const isProduction = true
 
 const port = process.env.PORT || 5000
 

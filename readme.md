@@ -64,7 +64,7 @@ Get videos
 
 -   **200**
 
-```json
+```
 [
     {
         _id: string,
@@ -91,7 +91,7 @@ Get a video
 
 -   **200**
 
-```json
+```
 {
     _id: string,
     title: string,
@@ -112,7 +112,7 @@ Create video
 -   **Headers**: Content-Type: application/json, Authorization: `Bearer token`
 -   **Body**:
 
-```json
+```
 {
     _id: string,
     thumbnailL: string,
@@ -125,7 +125,7 @@ Create video
 
 -   **201**
 
-```json
+```
 {
     video: {
         _id: string,
@@ -149,7 +149,7 @@ Update a video
 -   **Headers**: Content-Type: application/json, Authorization: `Bearer token`
 -   **Body**:
 
-```json
+```
 {
     _id: string,
     title: string,
@@ -163,7 +163,7 @@ Update a video
 
 -   **200**
 
-```json
+```
 {
     _id: string,
     title: string,
@@ -187,7 +187,7 @@ Delete a video
 
 -   **200**
 
-```json
+```
 {
     "message": "Video is successfully deleted."
 }

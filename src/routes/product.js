@@ -4,15 +4,17 @@ const { validateAuthorization } = require("../middleware/auth")
 
 const {
     createProductController,
-    getProductListOfVideoController,
     updateProductController,
     deleteProductController,
 } = require("../controllers/product")
 
 // Get Products that belong to a video.
-router.get("/products", getProductListOfVideoController)
 router.post("/products", validateAuthorization, createProductController)
-router.put("/products", validateAuthorization, updateProductController)
+router.put(
+    "/products/:productId",
+    validateAuthorization,
+    updateProductController,
+)
 
 router.delete(
     "/products/:productId",

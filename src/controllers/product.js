@@ -37,7 +37,8 @@ const createProductController = async (req, res) => {
 
 const updateProductController = async (req, res) => {
     const loggedInUser = req.loggedInUser
-    const { productId, title, image, link, price, videoId } = req.body
+    const productId = req.params.productId
+    const { title, image, link, price, videoId } = req.body
 
     try {
         const product = await ProductModel.findOneAndUpdate(
@@ -79,7 +80,7 @@ const deleteProductController = async (req, res) => {
 }
 
 const getProductListOfVideoController = async (req, res) => {
-    const videoId = req.query.video
+    const videoId = req.params.videoId
 
     try {
         const products = await ProductModel.find({ video: videoId })

@@ -12,7 +12,7 @@ const {
 const { validateAuthorization } = require("../middleware/auth")
 
 router.post("/users", createUserController)
-router.put("/users", validateAuthorization, updateUserController)
+router.put("/users/:userId", validateAuthorization, updateUserController)
 router.post("/users/login", loginUserController)
 
 // Routes related to product

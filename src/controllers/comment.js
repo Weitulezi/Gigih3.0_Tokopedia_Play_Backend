@@ -25,7 +25,7 @@ const createCommentController = async (req, res) => {
 }
 
 const getCommentListOfVideoController = async (req, res) => {
-    const videoId = req.query.video
+    const videoId = req.params.videoId
 
     try {
         const comments = await CommentModel.find({ video: videoId })

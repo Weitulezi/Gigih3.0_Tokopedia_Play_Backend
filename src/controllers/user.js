@@ -7,7 +7,7 @@ const bcrypt = require("bcryptjs")
 const validator = require("validator")
 
 const createUserController = async (req, res) => {
-    const { username, email, password } = req.body
+    const { username, email, password, imageProfile } = req.body
 
     // Validate username is alphanumeric
     const isUsernameAlphanumeric = validator.isAlphanumeric(username)
@@ -47,7 +47,7 @@ const createUserController = async (req, res) => {
     const user = new UserModel({
         username,
         email,
-        imageProfile: "",
+        imageProfile,
         password: hashedPassword,
     })
 
@@ -69,6 +69,12 @@ const createUserController = async (req, res) => {
 
 const updateUserController = async (req, res) => {
     const loggedInUser = req.loggedInUser
+    const userId = req.params.userId
+
+    if (userId !== loggedInUser._id) {
+        return res.status(401).json({ message: "You are unauthorized." })
+    }
+
     const { username, email, password } = req.body
 
     // Validate username is alphanumeric
@@ -181,12 +187,14 @@ const loginUserController = async (req, res) => {
         _id: String(user._id),
         username: user.username,
         email: user.email,
+        imageProfile: user.imageProfile,
     })
     res.status(200).json({
         user: {
             _id: String(user._id),
             username: user.username,
             email: user.email,
+            imageProfile: user.imageProfile,
         },
         token,
     })

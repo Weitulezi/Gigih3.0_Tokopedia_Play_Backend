@@ -20,7 +20,9 @@ database.once("connected", () => {
     console.log("Database connected!")
 })
 
-const port = process.env.PORT || 3000
+const isProduction = false
+
+const port = process.env.PORT || 5000
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -29,6 +31,7 @@ app.use(
         origin: [
             "https://gigih3-0-tokopedia-play-frontend.vercel.app/",
             "https://gigih3-0-tokopedia-play-frontend.vercel.app",
+            "http://localhost:3000",
         ],
     }),
 )

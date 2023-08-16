@@ -20,7 +20,7 @@ database.once("connected", () => {
     console.log("Database connected!")
 })
 
-const isProduction = false
+const isProduction = true
 
 const port = process.env.PORT || 5000
 
@@ -31,7 +31,7 @@ app.use(
         origin: [
             "https://gigih3-0-tokopedia-play-frontend.vercel.app/",
             "https://gigih3-0-tokopedia-play-frontend.vercel.app",
-            "http://localhost:3000",
+            !isProduction && "http://localhost:3000",
         ],
     }),
 )
